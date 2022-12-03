@@ -1,4 +1,5 @@
 from src.actions.move import Move
+from src.actions.wave import Wave
 from src.common.enums import Direction
 from src.common.point import Point
 from src.objects.object import Object
@@ -26,6 +27,7 @@ class Agent(Object):
                 self,
                 direction).execute(
                 self.scene),
+            'wave': Wave(self).execute,
             'Direction': Direction,
             'len': len,
             'range': range,
