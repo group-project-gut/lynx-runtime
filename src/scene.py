@@ -4,6 +4,7 @@ from typing import Dict, List
 from src.common.point import Point
 from src.objects.agent import Agent
 from src.objects.floor import Floor
+from src.objects.key import Key
 from src.objects.portal import Portal
 from src.objects.object import Object
 from src.objects.npcs.enemy import Enemy
@@ -27,7 +28,7 @@ class Scene:
         self.objects_dict = {}
         self.agent_locals = {}
         self.runtime = runtime
-        self.__player = Agent(self)
+        self.player = Agent(self)
 
         self._generate_scene()
 
@@ -53,6 +54,7 @@ class Scene:
             Floor(self, point)
 
         Portal(self, random.choice(points))
+        Key(self, random.choice(points))
         Enemy(self, random.choice(points))
 
     def __getitem__(self, indices) -> Object:

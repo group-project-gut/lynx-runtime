@@ -7,4 +7,6 @@ COPY "containers/entrypoint.sh" ./
 COPY "main.py" "/runtime/main.py"
 COPY "src" "/runtime/src"
 
+RUN pip install -r requirments.txt
+
 ENTRYPOINT [ "/entrypoint.sh" ]
