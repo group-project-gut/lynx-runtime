@@ -1,3 +1,4 @@
+from src.actions.interactive_object import InteractiveObject
 from src.common.point import Point
 from src.common.serializable import Properties
 from src.objects.agent import Agent
@@ -12,14 +13,15 @@ class Door(Object):
     properties: Properties
     scene: 'Scene'
     walkable: bool
-    matching_key: int
+    keys: list
 
     def __init__(self, scene: 'Scene', position: Point) -> None:
         super().__init__(position, scene)
-
-    def match_key(self, key):
-        self.matching_key = key.properties.id
+        self.keys = []
 
     def on_collision(self, other) -> None:
-        if isinstance(other, Agent):
-            print("match key")
+        if isinstance(other, Agent) and self.can_open(other.items):
+            InteractiveObject(self).execute()
+
+    def can_open(self, items: list):
+        return any(item in self.keys for item in items)

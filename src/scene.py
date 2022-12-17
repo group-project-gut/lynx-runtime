@@ -75,7 +75,9 @@ class Scene:
         for point in points:
             Floor(self, point)
 
-        Door(self, Point(2, 0)).match_key(Key(self, Point(1, 0)))
+        Key(self, Point(1, 0)).fit_door(
+            Door(self, Point(2, 0))
+        )
 
     def __getitem__(self, indices) -> Object:
         return self.objects_map.get(indices)
