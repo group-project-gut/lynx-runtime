@@ -27,7 +27,7 @@ class Runtime:
         a portal.
         """
         self.next_scene.execute()
-        max_scenes: int = 8
+        max_scenes: int = 1
         scenes: int = 0
         while scenes < max_scenes:
             try:

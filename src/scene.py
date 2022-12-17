@@ -3,6 +3,7 @@ from typing import Dict, List
 
 from src.common.point import Point
 from src.objects.agent import Agent
+from src.objects.door import Door
 from src.objects.floor import Floor
 from src.objects.key import Key
 from src.objects.portal import Portal
@@ -28,9 +29,9 @@ class Scene:
         self.objects_dict = {}
         self.agent_locals = {}
         self.runtime = runtime
-        self.player = Agent(self)
+        self.__player = Agent(self)
 
-        self._generate_scene()
+        self._test_scene()
 
     def _generate_scene(self):
         """
@@ -56,6 +57,25 @@ class Scene:
         Portal(self, random.choice(points))
         Key(self, random.choice(points))
         Enemy(self, random.choice(points))
+
+    def _test_scene(self):
+        STEPS = 4
+        pos = Point(0, 0)
+        points = [pos]
+        for i in range(STEPS):
+            points.append(Point(-i, 0))
+            points.append(Point(i, 0))
+            points.append(Point(0, -i))
+            points.append(Point(0, i))
+            points.append(Point(i, i))
+            points.append(Point(-i, -i))
+            points.append(Point(i, -i))
+            points.append(Point(-i, i))
+
+        for point in points:
+            Floor(self, point)
+
+        Door(self, Point(2, 0)).match_key(Key(self, Point(1, 0)))
 
     def __getitem__(self, indices) -> Object:
         return self.objects_map.get(indices)

@@ -1,23 +1,25 @@
-from src.actions.destroy import Destroy
 from src.common.point import Point
 from src.common.serializable import Properties
+from src.objects.agent import Agent
 from src.objects.object import Object
 
 
-class Key(Object):
+class Door(Object):
     """
-    `Object` existing in a `scene`.
+    `Object` interacting with a key
     """
     base: str
     properties: Properties
     scene: 'Scene'
     walkable: bool
+    matching_key: int
 
     def __init__(self, scene: 'Scene', position: Point) -> None:
         super().__init__(position, scene)
 
-    def on_collision(self, other) -> None:
-        Destroy(self).execute()
-        other.items.append(self.properties.id)
-        self.scene.objects_map[self.properties.position].remove(self)
+    def match_key(self, key):
+        self.matching_key = key.properties.id
 
+    def on_collision(self, other) -> None:
+        if isinstance(other, Agent):
+            print("match key")
