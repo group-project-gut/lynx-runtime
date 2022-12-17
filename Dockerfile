@@ -3,10 +3,10 @@ FROM python:3.10-slim-buster
 
 WORKDIR /
 
-COPY "containers/entrypoint.sh" ./
 COPY "main.py" "/runtime/main.py"
+COPY "requirements.txt" "/runtime/requirements.txt"
 COPY "src" "/runtime/src"
 
-RUN pip install -r requirments.txt
+RUN pip install -r /runtime/requirements.txt
 
-ENTRYPOINT [ "/entrypoint.sh" ]
+ENTRYPOINT [ "/runtime/main.py" ]
