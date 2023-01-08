@@ -1,4 +1,6 @@
 from src.actions.move import Move
+from src.actions.nearby_objects import NearbyObjects
+from src.actions.pick_up import PickUp
 from src.actions.wave import Wave
 from src.common.enums import Direction
 from src.common.point import Point
@@ -38,6 +40,8 @@ class Agent(Object):
             'len': len,
             'range': range,
             'enumerate': enumerate,
+            'nearby_objects': NearbyObjects(self).execute,
+            'pick_up': lambda object_id: PickUp(self, object_id).execute()
         }
 
         # Sure, I know exec bad
